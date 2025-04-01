@@ -71,5 +71,15 @@ public class LoginController {
         session.invalidate();
         return "redirect:/login";
     }
+
+    @GetMapping("/user")
+    public String user(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("currentUser");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("user", user);
+        return "user";
+    }
 }
 
