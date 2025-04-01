@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Client Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+            text-decoration:    none;
+            font-family: "Winky Sans", sans-serif;
+        }
+
+        .card {
+            position: relative;
+            margin-top: 20px;
+            margin-left: 220px;
+            margin-right: 60px;
+        }
+
+
+        body {
+            background: snow;
+
+        }
+        .wrapper {
+            display: flex;
+            position: relative;
+        }
+        .wrapper .sidebar {
+            position: fixed;
+            width: 200px;
+            height: 100%;
+            background: #0A014F;
+            padding: 30px 0;
+        }
+
+        .wrapper .sidebar h2 {
+            color: #CD9FCC;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .wrapper .sidebar ul li {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(225,225,225,0.2);
+        }
+        .wrapper .sidebar ul li a {
+            color: #FAE8EB;
+        }
+        .wrapper .sidebar ul li a .fas {
+            width: 25px;
+        }
+        .wrapper .sidebar ul li :hover {
+            background: #CD9FCC;
+        }
+        .wrapper .sidebar ul li :hover a {
+            color: blueviolet;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class = "wrapper">
+    <div class = "sidebar">
+        <h2>SideBar</h2>
+        <ul>
+            <li><a href = "/opslag"><i class = "fas fa-home" ></i>Home</a></li>
+            <li><a href = "/user"><i class = "fas fa-user" ></i>Profil</a></li>
+            <li><a href = "#"><i class = "fas fa-profil" ></i>NOGET</a></li>
+            <li><a href = "/"><i class = "fas fa-logout" ></i>Log ud</a></li>
+
+        </ul>
+
+    </div>
+</div>
+
+</body>
+</html>
