@@ -64,6 +64,22 @@
         .wrapper .sidebar ul li :hover a {
             color: blueviolet;
         }
+        .wrapper .main_content {
+            width: 100%;
+            margin-left: 220px;
+            margin-top: 20px;
+        }
+        .form-control {
+         font-size: larger;
+        }
+        .form-label {
+            font-size: 24px;
+        }
+        .rounded.border {
+            font-size: 22px;
+            background-color: snow;
+
+        }
 
     </style>
 </head>
@@ -81,7 +97,67 @@
         </ul>
 
     </div>
+
+    <div class = "main_content">
+        <div class = "header">
+
+            <h1 class = mb-4 th:text = "'Profil for bruger: ' + ${user.firstName}">velkommen!</h1>
+
+        </div>
+
+        <div class = "info">
+            <form class="row g-3">
+                <div class="col-md-5 mb-3">
+                    <label for="inputEmail2" class="form-label"> Navn</label>
+                    <div>
+                    <label class="form-label rounded border col-md-7" id="inputEmail2"
+                           th:text = "${user.firstName} + ' ' + ${user.lastName}"></label>
+                    </div>
+                </div>
+            </form>
+                <form class="row g-3">
+                <div class="col-md-2">
+                    <label for="inputMobil" class="form-label">Mobilnummer</label>
+                    <div>
+                        <label class="form-label rounded border col-md-7" id="inputMobil"
+                        th:text = "${user.phoneNumber}"></label>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label for="inputEmail4" class="form-label">Postnummer</label>
+                    <div>
+                        <label class="form-label rounded border col-md-6" id="inputEmail4"
+                        th:text = "${user.postalCode}"></label>
+                    </div>
+                </div>
+            </form>
+            <form class="row g-3">
+                <div class="col-md-5 mb-3">
+                    <label for="inputEmail1" class="form-label">Din mail</label>
+                    <div>
+                        <label class="form-label rounded border col-md-7" id="inputEmail1"
+                        th:text = "${user.email}"></label>
+                    </div>
+                </div>
+            </form>
+                <form class="row g-3">
+                <div class="col-md-5 mb-3">
+                    <label for="inputEmail3" class="form-label">Dit password</label>
+                    <div>
+                        <label class="form-label rounded border col-md-5 mb-3" id="inputEmail3">***********</label>
+                    </div>
+                    <button class = "btn btn-primary">Rediger profil</button>
+                </div>
+
+            </form>
+
+        </div>
+
+
+    </div>
+
 </div>
+
 
 </body>
 </html>
