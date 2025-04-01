@@ -11,7 +11,7 @@ public class DatabaseConnection {
     public DataSource dataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/pizzaParadise");
+        ds.setUrl("jdbc:mysql://localhost:3306/raceKat");
         ds.setUsername("root");
         ds.setPassword("root");
         return ds;
