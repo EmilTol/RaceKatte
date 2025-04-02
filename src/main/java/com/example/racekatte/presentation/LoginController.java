@@ -1,5 +1,6 @@
 package com.example.racekatte.presentation;
 
+import com.example.racekatte.application.UserService;
 import com.example.racekatte.entity.User;
 import com.example.racekatte.application.LoginService;
 import jakarta.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ public class LoginController {
     public LoginController(LoginService loginService) {
         this.loginService = loginService;
     }
+
 
     @GetMapping("/")
     public String rootRedirect() {
@@ -81,5 +83,6 @@ public class LoginController {
         model.addAttribute("user", user);
         return "user";
     }
+
 }
 

@@ -37,12 +37,12 @@
             position: fixed;
             width: 200px;
             height: 100%;
-            background: #0A014F;
+            background: #56778f;
             padding: 30px 0;
         }
 
         .wrapper .sidebar h2 {
-            color: #CD9FCC;
+            color: #f8b4af;
             text-transform: uppercase;
             text-align: center;
             margin-bottom: 30px;
@@ -68,6 +68,7 @@
             width: 100%;
             margin-left: 220px;
             margin-top: 20px;
+
         }
         .form-control {
          font-size: larger;
@@ -108,7 +109,7 @@
         <div class = "info">
             <form class="row g-3">
                 <div class="col-md-5 mb-3">
-                    <label for="inputEmail2" class="form-label"> Navn</label>
+                    <label class="form-label"> Navn</label>
                     <div>
                     <label class="form-label rounded border col-md-7" id="inputEmail2"
                            placeholder = "Dit navn"
@@ -118,14 +119,14 @@
             </form>
                 <form class="row g-3">
                 <div class="col-md-2">
-                    <label for="inputMobil" class="form-label">Mobilnummer</label>
+                    <label class="form-label">Mobilnummer</label>
                     <div>
                         <label class="form-label rounded border col-md-7" id="inputMobil"
                         th:text = "${user.phoneNumber}"></label>
                     </div>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <label for="inputEmail4" class="form-label">Postnummer</label>
+                    <label class="form-label">Postnummer</label>
                     <div>
                         <label class="form-label rounded border col-md-6" id="inputEmail4"
                         th:text = "${user.postalCode}"></label>
@@ -134,7 +135,7 @@
             </form>
             <form class="row g-3">
                 <div class="col-md-5 mb-3">
-                    <label for="inputEmail1" class="form-label">Din mail</label>
+                    <label class="form-label">Din mail</label>
                     <div>
                         <label class="form-label rounded border col-md-7" id="inputEmail1"
                         th:text = "${user.email}"></label>
@@ -143,22 +144,119 @@
             </form>
                 <form class="row g-3">
                 <div class="col-md-5 mb-3">
-                    <label for="inputEmail3" class="form-label">Dit password</label>
+                    <label class="form-label">Dit password</label>
                     <div>
                         <label class="form-label rounded border col-md-5 mb-3" id="inputEmail3">***********</label>
                     </div>
-                    <button class = "btn btn-primary">Rediger profil</button>
+
                 </div>
 
             </form>
+            <button class = "btn btn-primary" data-bs-toggle = "modal" data-bs-target = "#test-modal">Rediger profil</button>
 
         </div>
 
 
+
+
     </div>
+
+
 
 </div>
 
+<div class = "modal fade" id = "test-modal" tabindex = "-1" aria-labelledby="model-title"
+     aria-hidden = "true">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id = "modal-title">Hvor er denne tekst</h5>
+                <button type = "button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/user" method = "post">
+                    <input type = "hidden" name = "userId" th:value = "${user.id}">
+                <div class="input-group flex-nowrap" >
 
+                    <input type="text" id = "firstName" name= "firstName" class="form-control"
+                           placeholder="Fornavn" aria-label="Fornavn" aria-describedby="addon-wrapping"
+                           th:value="${user.firstName ?: 'Anonymous'}">
+
+                    <input type="text" id = "lastName" name= "lastName" class="form-control"
+                           placeholder="Efternavn" aria-label="Efternavn" aria-describedby="addon-wrapping"
+                           th:value="${user.lastName ?: 'user'}">
+
+                </div>
+                <div class="text-left form-text mb-3" id="basic-addon5">Fornavn og efternavn</div>
+
+                <div class="input-group flex-nowrap" >
+                    <input type="text" id = "email" name = "email" class="form-control"
+                           placeholder="Email*" aria-label="Email" aria-describedby="addon-wrapping"
+                           th:value = "${user.email}" >
+                </div>
+                <div class="text-left form-text mb-3" id="basic-addon1">mail@example.com</div>
+
+                <div class="input-group flex-nowrap">
+                    <input type="text" id = "password" name = "password" class="form-control"
+                           placeholder="Adgangskode*" aria-label="Adgangskode" aria-describedby="addon-wrapping">
+                </div>
+                <div class="text-left form-text mb-3" id="basic-addon2">Aldrig del din adgangskode >:I</div>
+
+                <div class="input-group flex-nowrap">
+                    <input type="text"  id = "postalCode" name = "postalCode" class="form-control"
+                           placeholder="Postnummer" aria-label="Postnummer" aria-describedby="addon-wrapping"
+                           th:value = "${user.postalCode}" >
+                </div>
+                <div class="text-left form-text mb-3" id="basic-addon6">Eksempel 2020</div>
+
+                <div class="input-group flex-nowrap">
+                    <input type="text" id = "phoneNumber" name = "phoneNumber" class="form-control"
+                           placeholder="Telefon nummer" aria-label="Telefon nummer" aria-describedby="addon-wrapping"
+                           th:value = "${user.phoneNumber}" >
+                </div>
+                <div class="text-left form-text mb-3" id="basic-addon7">Telefon nummer</div>
+                    <div class="modal-footer">
+                        <button type = "submit" class="btn ">Updater login</button>
+
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        document.getElementById("test-modal").addEventListener("shown.bs.modal", function () {
+            console.log("Modal åbnet!");
+        });
+
+        document.getElementById("test-modal").addEventListener("hidden.bs.modal", function () {
+            console.log("Modal lukket!");
+        });
+        const form = document.querySelector("#test-modal form");
+
+        form.addEventListener("submit", function (event) {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            if (email === "" || password === "") {
+                event.preventDefault();
+                alert("Email eller adgangskode må ikke være tomme!");
+            }
+        });
+
+    });
+</script>
 </body>
 </html>
