@@ -20,7 +20,7 @@ public class LoginController {
     }
 
 
-    @GetMapping("/")
+    @GetMapping("/") // Gør så vi kan skrive localhost8080 og få localhost808+/login i stedet for at skulle bruge en index
     public String rootRedirect() {
         return "redirect:/login";
     }
@@ -46,14 +46,14 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute User user, @RequestParam("confirmPassword") String confirmPassword, Model model) {
-        boolean success = loginService.register(user, confirmPassword);
-        if (success) {
+    public String register(@ModelAttribute User user, @RequestParam("confirmPassword") String confirmPassword, Model model) { // Håndtere registering af ny profil, binder data til vores user og genter confirm parameter
+        boolean success = loginService.register(user, confirmPassword); // Kalder vores login for at reg bruger
+        if (success) { // Hvis success går vi til login side
             return "redirect:/login";
-        } else {
-            model.addAttribute("registrationError", "Forkert bekræft kodeord eller email allerede i brug");
-            model.addAttribute("showRegistrationModal", true);
-            model.addAttribute("user", user);
+        } else { // Hvis ikke
+            model.addAttribute("registrationError", "Forkert bekræft kodeord eller email allerede i brug"); // Fejlbesked
+            model.addAttribute("showRegistrationModal", true); // Bliver på vores modal, sikre at den ikke lukker
+            model.addAttribute("user", new User()); // Gør så vi får en blank side, vi kan fjerne new hvis vi vil have den beholder mail, ved ikke hvad der er bedst
             return "login";
         }
     }

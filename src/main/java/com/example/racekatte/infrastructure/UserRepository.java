@@ -26,7 +26,7 @@ public class UserRepository {
                 user.setPhoneNumber(rs.getString("phoneNumber"));
                 return user;
             });
-        } catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) { // Fanger hvis der ikke er noget resultat med den email
             return null;
         }
     }
