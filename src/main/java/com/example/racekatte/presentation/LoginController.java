@@ -51,7 +51,7 @@ public class LoginController {
         if (success) {
             return "redirect:/login";
         } else {
-            model.addAttribute("Kunne ikke registere", "Forkert bekræft kodeord eller email allerede i brug");
+            model.addAttribute("registrationError", "Forkert bekræft kodeord eller email allerede i brug");
             model.addAttribute("showRegistrationModal", true);
             model.addAttribute("user", user);
             return "login";
