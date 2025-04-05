@@ -1,6 +1,8 @@
 package com.example.racekatte.presentation;
 
+import com.example.racekatte.application.CatService;
 import com.example.racekatte.application.UserService;
+import com.example.racekatte.entity.Cat;
 import com.example.racekatte.entity.User;
 import com.example.racekatte.application.LoginService;
 import jakarta.servlet.http.HttpSession;
@@ -9,14 +11,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class LoginController {
 
     private final LoginService loginService;
+    private final CatService catService;
 
     @Autowired
-    public LoginController(LoginService loginService) {
+    public LoginController(LoginService loginService, CatService catService) {
         this.loginService = loginService;
+        this.catService = catService;
     }
 
 
@@ -61,6 +67,8 @@ public class LoginController {
     @GetMapping("/home")
     public String home(HttpSession session, Model model) {
         User user = (User) session.getAttribute("currentUser");
+        List<Cat> cats = catService.getAllCatsAndUsers();
+        model.addAttribute("cats", cats);
         if (user == null) {
             return "redirect:/login";
         }

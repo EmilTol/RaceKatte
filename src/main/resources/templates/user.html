@@ -102,7 +102,7 @@
     <div class = "main_content">
         <div class = "header">
 
-            <h1 class = mb-4 th:text = "'Profil for bruger: ' + ${user.firstName}">velkommen!</h1>
+            <h1 class = mb-4 th:text = "'Profil for bruger: ' + ${user.firstName ?: 'Ikke angivet'}">velkommen!</h1>
 
         </div>
 
@@ -113,7 +113,7 @@
                     <div>
                     <label class="form-label rounded border col-md-7" id="inputEmail2"
                            placeholder = "Dit navn"
-                           th:text = "${user.firstName} + ' ' + ${user.lastName}"></label>
+                           th:text = "${user.firstName ?: 'Ikke angivet'} + ' ' + ${user.lastName}"></label>
                     </div>
                 </div>
             </form>
@@ -182,11 +182,11 @@
 
                     <input type="text" id = "firstName" name= "firstName" class="form-control"
                            placeholder="Fornavn" aria-label="Fornavn" aria-describedby="addon-wrapping"
-                           th:value="${user.firstName ?: 'Anonymous'}">
+                           th:value="${user.firstName}">
 
                     <input type="text" id = "lastName" name= "lastName" class="form-control"
                            placeholder="Efternavn" aria-label="Efternavn" aria-describedby="addon-wrapping"
-                           th:value="${user.lastName ?: 'user'}">
+                           th:value="${user.lastName}">
 
                 </div>
                 <div class="text-left form-text mb-3" id="basic-addon5">Fornavn og efternavn</div>

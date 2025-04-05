@@ -10,6 +10,8 @@ public class Cat {
     private String gender;
     private String description;
     private String img;
+    private User user;
+    private Race race;
     private List<Race> races;
 
     public Cat() {
@@ -23,6 +25,7 @@ public class Cat {
         this.gender = gender;
         this.description = description;
         this.img = img;
+
     }
     public int getId() {
         return id;
@@ -73,4 +76,18 @@ public class Cat {
         this.races = races;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public Race getRace() {
+        return race;
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
+    }
 }
