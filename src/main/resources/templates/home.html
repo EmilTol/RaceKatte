@@ -81,6 +81,7 @@
             <li><a href = "/home"><i class = "fas fa-home" ></i>Home</a></li>
             <li><a href = "/user"><i class = "fas fa-user" ></i>Profil</a></li>
             <li><a href = "#"><i class = "fas fa-profil" ></i>NOGET</a></li>
+            <li><a href="/catpost"><i class="fas fa-plus"></i> Opret opslag</a></li>
             <li><a href = "/"><i class = "fas fa-logout" ></i>Log ud</a></li>
 
         </ul>
@@ -145,13 +146,14 @@
             <div th:each = "cat: ${cats}" >
             <div class="col">
                 <div class="card">
-                    <img src="" class="card-img-top" alt="...">
+                    <img th:src="@{'/uploads/' + ${cat.img}}" class="card-img-top" alt="Tak Mikkel :) ">
                     <div class="card-body">
                         <h5 class="card-title" th:text = "${cat.name}"></h5>
                         <p class="card-text" th:text = "${cat.description}"></p>
+                        <img th:src="@{'/uploads/' + ${cat.img}}" alt="Billede af kat">
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item" th:text = "'Race: ' + ${cat.race.name}"></li>
+                        <li class="list-group-item" th:text="'Race: ' + ${cat.race?.name ?: 'Ikke angivet'}"></li>
                         <li class="list-group-item" th:text = "'Alder: ' + ${cat.age}">Kat alder</li>
                         <li class="list-group-item" th:text = "'Køn: ' + ${cat.gender}"> Kat køn</li>
                     </ul>

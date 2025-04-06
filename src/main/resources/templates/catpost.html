@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret Kat Indlæg</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Opret Kat Indlæg</h1>
+    <form th:action="@{/cat/upload}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="name" class="form-label">Kattens Navn</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Indtast kattens navn" required>
+        </div>
+        <div class="mb-3">
+            <label for="age" class="form-label">Alder</label>
+            <input type="number" name="age" class="form-control" id="age" placeholder="Indtast kattens alder" required>
+        </div>
+        <div class="mb-3">
+            <label for="gender" class="form-label">Køn</label>
+            <select name="gender" class="form-select" id="gender" required>
+                <option value="" disabled selected>Vælg køn</option>
+                <option th:each="g : ${genders}" th:value="${g}" th:text="${g}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="race" class="form-label">Race</label>
+            <select name="race" class="form-select" id="race" required>
+                <option value="0" selected>Vælg race</option>
+                <option th:each="race : ${races}" th:value="${race.id}" th:text="${race.name}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Beskrivelse</label>
+            <textarea name="description" class="form-control" id="description" rows="3" placeholder="Beskriv katten"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Billed-URL (filupload)</label>
+            <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Opret Indlæg</button>
+    </form>
+    <div th:if="${error}" class="alert alert-danger mt-3" th:text="${error}"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

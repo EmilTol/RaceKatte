@@ -12,7 +12,6 @@ public class Cat {
     private String img;
     private User user;
     private Race race;
-    private List<Race> races;
 
     public Cat() {
     }
@@ -68,12 +67,6 @@ public class Cat {
     }
     public void setImg(String img) {
         this.img = img;
-    }
-    public List<Race> getRaces() {
-        return races;
-    }
-    public void setRaces(List<Race> races) {
-        this.races = races;
     }
 
     public User getUser() {
