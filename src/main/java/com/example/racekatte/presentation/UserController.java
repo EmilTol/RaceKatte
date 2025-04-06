@@ -37,5 +37,15 @@ public class UserController {
 
         return "redirect:/user";
     }
+    @PostMapping("/delete-profile")
+    public String deleteUser(HttpSession session) {
+    User currentUser = (User) session.getAttribute("currentUser");
+
+    if (currentUser != null) {
+        userService.deleteUser(currentUser.getId());
+        session.invalidate();
+    }
+    return "redirect:/login";
+    }
 
 }

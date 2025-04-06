@@ -77,5 +77,9 @@ public class UserRepository {
             return null;
         }
     }
+    public void deleteById(int id) {
+        String sql = "DELETE FROM User WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 
 }

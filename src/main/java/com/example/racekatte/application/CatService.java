@@ -29,4 +29,7 @@ public class CatService {
     public List<Race> getAllRaces() {
         return catRepo.getAllRaces();
     }
+    public List<Cat> findCatsByUserId(int userId) {
+        return catRepo.findCatsByUserId(userId);
+    }
 }

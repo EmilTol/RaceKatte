@@ -16,6 +16,65 @@ public class CatRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    public List<Cat> findCatsByUserId(int userId) {
+        String sql = """
+        SELECT 
+            c.id AS catId,
+            c.name AS catName,
+            c.age,
+            c.gender,
+            c.description,
+            c.img,
+
+            u.id AS userId,
+            u.email,
+            u.firstName,
+            u.lastName,
+            u.postalCode,
+            u.phoneNumber,
+
+            r.id AS raceId,
+            r.name AS raceName
+
+        FROM Cat c
+        JOIN User u ON c.userId = u.id
+        LEFT JOIN CatRace cr ON c.id = cr.catId
+        LEFT JOIN Race r ON cr.raceId = r.id
+        WHERE c.userId = ?
+        """;
+
+        return jdbcTemplate.query(sql, new Object[]{userId}, rs -> {
+            List<Cat> cats = new ArrayList<>();
+            while (rs.next()) {
+                Cat cat = new Cat();
+                cat.setId(rs.getInt("catId"));
+                cat.setName(rs.getString("catName"));
+                cat.setAge(rs.getInt("age"));
+                cat.setGender(rs.getString("gender"));
+                cat.setDescription(rs.getString("description"));
+                cat.setImg(rs.getString("img"));
+
+                User user = new User();
+                user.setId(rs.getInt("userId"));
+                user.setEmail(rs.getString("email"));
+                user.setFirstName(rs.getString("firstName"));
+                user.setLastName(rs.getString("lastName"));
+                user.setPostalCode(rs.getString("postalCode"));
+                user.setPhoneNumber(rs.getString("phoneNumber"));
+                cat.setUser(user);
+
+
+                Race race = new Race();
+                race.setId(rs.getInt("raceId"));
+                race.setName(rs.getString("raceName"));
+                cat.setRace(race);
+
+                cats.add(cat);
+            }
+            return cats;
+        });
+    }
+
     public List<Cat> findAllCatsAndUsers() {
         String sql = "SELECT \n" +
                 "  c.id AS catId,\n" +
@@ -58,13 +117,12 @@ public class CatRepository {
                 user.setPhoneNumber(rs.getString("phoneNumber"));
                 cat.setUser(user);
 
-                int raceId = rs.getInt("raceId");
-                if (!rs.wasNull()) {
+
                     Race race = new Race();
                     race.setId(rs.getInt("raceId"));
                     race.setName(rs.getString("raceName"));
                     cat.setRace(race);
-                }
+
                 cats.add(cat);
             }
             return cats;

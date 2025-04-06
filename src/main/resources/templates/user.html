@@ -20,8 +20,8 @@
         .card {
             position: relative;
             margin-top: 20px;
-            margin-left: 220px;
-            margin-right: 60px;
+
+
         }
 
 
@@ -152,9 +152,46 @@
                 </div>
 
             </form>
-            <button class = "btn btn-primary" data-bs-toggle = "modal" data-bs-target = "#test-modal">Rediger profil</button>
+
+            <div class="d-flex gap-2 mt-4 mb-4">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#test-modal">
+                    Rediger profil
+                </button>
+
+                <form action="/delete-profile" method="post" onsubmit="return confirm('Er du sikker på du vil slette din profil? Alle opslag forsvinder med sletning af profil');">
+                    <button class="btn btn-danger" type="submit">Slet profil</button>
+                </form>
+            </div>
+            <div>
+                <h1>Dine opslag</h1>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div th:each = "cat: ${cats}" >
+                    <div class="col">
+                        <div class="card">
+                            <img th:src="@{'/uploads/' + ${cat.img}}" class="card-img-top" alt="Tak Mikkel :) ">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text = "${cat.name}"></h5>
+                                <p class="card-text" th:text = "${cat.description}"></p>
+
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" th:text="'Race: ' + ${cat.race.name ?: 'Ikke angivet'}"></li>
+                                <li class="list-group-item" th:text = "'Alder: ' + ${cat.age}">Kat alder</li>
+                                <li class="list-group-item" th:text = "'Køn: ' + ${cat.gender}"> Kat køn</li>
+                            </ul>
+                            <div class="card-body">
+                                <a href="#" class="card-link" th:text = "${cat.user.firstName ?: 'Ikke angivet'}"></a>
+                                <p th:text = "'Mobil: ' + ${cat.user.phoneNumber ?: 'Ikke angivet'} + '   Postnummer: ' + ${cat.user.postalCode ?: 'Ikke angivet'}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
+
 
 
 

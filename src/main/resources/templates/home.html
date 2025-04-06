@@ -150,10 +150,10 @@
                     <div class="card-body">
                         <h5 class="card-title" th:text = "${cat.name}"></h5>
                         <p class="card-text" th:text = "${cat.description}"></p>
-                        <img th:src="@{'/uploads/' + ${cat.img}}" alt="Billede af kat">
+
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item" th:text="'Race: ' + ${cat.race?.name ?: 'Ikke angivet'}"></li>
+                        <li class="list-group-item" th:text="'Race: ' + ${cat.race.name ?: 'Ikke angivet'}"></li>
                         <li class="list-group-item" th:text = "'Alder: ' + ${cat.age}">Kat alder</li>
                         <li class="list-group-item" th:text = "'Køn: ' + ${cat.gender}"> Kat køn</li>
                     </ul>
