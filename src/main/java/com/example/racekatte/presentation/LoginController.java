@@ -67,11 +67,12 @@ public class LoginController {
     @GetMapping("/home")
     public String home(HttpSession session, Model model) {
         User user = (User) session.getAttribute("currentUser");
-        List<Cat> cats = catService.getAllCatsAndUsers();
-        model.addAttribute("cats", cats);
+
         if (user == null) {
             return "redirect:/login";
         }
+        List<Cat> cats = catService.getAllCatsAndUsers();
+        model.addAttribute("cats", cats);
         model.addAttribute("user", user);
         return "home";
     }

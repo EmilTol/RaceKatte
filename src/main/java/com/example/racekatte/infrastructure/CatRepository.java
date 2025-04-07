@@ -85,12 +85,14 @@ public class CatRepository {
                 "  c.description,\n" +
                 "  c.img,\n" +
                 "  c.raceId,\n" +
+
                 "  u.id AS userId,\n" +
                 "  u.email,\n" +
                 "  u.firstName,\n" +
                 "  u.lastName,\n" +
                 "  u.postalCode,\n" +
                 "  u.phoneNumber,\n" +
+
                 "  r.id AS raceId,\n" +
                 "  r.name AS raceName\n" +
                 "FROM Cat c\n" +
