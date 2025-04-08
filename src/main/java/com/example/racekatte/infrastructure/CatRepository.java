@@ -20,11 +20,13 @@ public class CatRepository {
         String sql = """
         SELECT 
             c.id AS catId,
+            c.userId,
             c.name AS catName,
             c.age,
             c.gender,
             c.description,
             c.img,
+            c.raceId,
 
             u.id AS userId,
             u.email,
@@ -35,13 +37,11 @@ public class CatRepository {
 
             r.id AS raceId,
             r.name AS raceName
-
         FROM Cat c
         JOIN User u ON c.userId = u.id
-        LEFT JOIN CatRace cr ON c.id = cr.catId
-        LEFT JOIN Race r ON cr.raceId = r.id
+        LEFT JOIN Race r ON c.raceId = r.id
         WHERE c.userId = ?
-        """;
+    """;
 
         return jdbcTemplate.query(sql, new Object[]{userId}, rs -> {
             List<Cat> cats = new ArrayList<>();
@@ -62,7 +62,6 @@ public class CatRepository {
                 user.setPostalCode(rs.getString("postalCode"));
                 user.setPhoneNumber(rs.getString("phoneNumber"));
                 cat.setUser(user);
-
 
                 Race race = new Race();
                 race.setId(rs.getInt("raceId"));
@@ -153,5 +152,9 @@ public class CatRepository {
                 cat.getImg()
         );
         return result == 1;
+    }
+    public void deleteCatById(int id) {
+        String sql = "DELETE FROM Cat WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 }

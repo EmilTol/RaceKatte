@@ -32,4 +32,7 @@ public class CatService {
     public List<Cat> findCatsByUserId(int userId) {
         return catRepo.findCatsByUserId(userId);
     }
+    public void deleteCat(int catId) {
+        catRepo.deleteCatById(catId);
+    }
 }
