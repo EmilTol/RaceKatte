@@ -1,5 +1,6 @@
 package com.example.racekatte.presentation;
 
+import com.example.racekatte.application.CatService;
 import com.example.racekatte.application.UserService;
 import com.example.racekatte.entity.User;
 import com.example.racekatte.infrastructure.UserRepository;
@@ -14,11 +15,15 @@ public class UserController {
 
     private final UserService userService;
     private final UserRepository userRepository;
+    private final CatService catService;
+
 
     @Autowired
-    public UserController(UserService userService, UserRepository userRepository) {
+    public UserController(UserService userService, UserRepository userRepository, CatService catService) {
         this.userService = userService;
         this.userRepository = userRepository;
+        this.catService = catService;
+        ;
     }
 
 
@@ -31,21 +36,32 @@ public class UserController {
             return "redirect:/login";
         }
 
-        userService.updateUser(currentUser.getId(),email, password, firstName, lastName, postalCode, phoneNumber);
+        userService.updateUser(currentUser.getId(), email, password, firstName, lastName, postalCode, phoneNumber);
 
         session.setAttribute("currentUser", userRepository.findById(currentUser.getId()));
 
         return "redirect:/user";
     }
+
     @PostMapping("/delete-profile")
     public String deleteUser(HttpSession session) {
-    User currentUser = (User) session.getAttribute("currentUser");
+        User currentUser = (User) session.getAttribute("currentUser");
 
-    if (currentUser != null) {
-        userService.deleteUser(currentUser.getId());
-        session.invalidate();
-    }
-    return "redirect:/login";
+        if (currentUser != null) {
+            userService.deleteUser(currentUser.getId());
+            session.invalidate();
+        }
+        return "redirect:/login";
     }
 
+    @PostMapping("/delete-cat")
+    public String deleteCat(@RequestParam("catId") int catId, HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "redirect:/login";
+        }
+
+        catService.deleteCat(catId);
+        return "redirect:/user";
+    }
 }

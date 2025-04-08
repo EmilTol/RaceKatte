@@ -5,89 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Client Manager</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            list-style: none;
-            text-decoration:    none;
-            font-family: "Winky Sans", sans-serif;
-        }
-
-        .card {
-            position: relative;
-            margin-top: 20px;
-
-
-        }
-
-
-        body {
-            background: snow;
-
-        }
-        .wrapper {
-            display: flex;
-            position: relative;
-        }
-        .wrapper .sidebar {
-            position: fixed;
-            width: 200px;
-            height: 100%;
-            background: #56778f;
-            padding: 30px 0;
-        }
-
-        .wrapper .sidebar h2 {
-            color: #f8b4af;
-            text-transform: uppercase;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .wrapper .sidebar ul li {
-            padding: 15px;
-            border-bottom: 1px solid rgba(0,0,0,0.2);
-            border-top: 1px solid rgba(225,225,225,0.2);
-        }
-        .wrapper .sidebar ul li a {
-            color: #FAE8EB;
-        }
-        .wrapper .sidebar ul li a .fas {
-            width: 25px;
-        }
-        .wrapper .sidebar ul li :hover {
-            background: #CD9FCC;
-        }
-        .wrapper .sidebar ul li :hover a {
-            color: blueviolet;
-        }
-        .wrapper .main_content {
-            width: 100%;
-            margin-left: 220px;
-            margin-top: 20px;
-            margin-right: 20px;
-        }
-        .form-control {
-         font-size: larger;
-        }
-        .form-label {
-            font-size: 24px;
-        }
-        .rounded.border {
-            font-size: 22px;
-            background-color: snow;
-
-        }
-
-    </style>
 </head>
 <body>
 
 <div class = "wrapper">
-    <div class = "sidebar">
+    <div class = "sidebar left-sidebar">
         <h2>SideBar</h2>
         <ul>
             <li><a href = "/home"><i class = "fas fa-home" ></i>Home</a></li>
@@ -166,7 +90,7 @@
                 <h1>Dine opslag</h1>
             </div>
 
-            <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="row row-cols-1 row-cols-md-1 g-4">
                 <div th:each = "cat: ${cats}" >
                     <div class="col">
                         <div class="card">
@@ -184,7 +108,19 @@
                             <div class="card-body">
                                 <a href="#" class="card-link" th:text = "${cat.user.firstName ?: 'Ikke angivet'}"></a>
                                 <p th:text = "'Mobil: ' + ${cat.user.phoneNumber ?: 'Ikke angivet'} + '   Postnummer: ' + ${cat.user.postalCode ?: 'Ikke angivet'}"></p>
+
+                                <div class="d-flex gap-2 mt-4 mb-4">
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#test-modal">
+                                        Rediger opslag - gør ikke noget
+                                    </button>
+
+                                    <form action="/delete-cat" method="post" onsubmit="return confirm('Slet dit opslag?');">
+                                        <input type="hidden" name="catId" th:value="${cat.id}" />
+                                        <button class="btn btn-danger" type="submit">Slet opslag</button>
+                                    </form>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -196,6 +132,23 @@
 
 
 
+    </div>
+
+    <div class="sidebar right-sidebar">
+        <h2>Filtre</h2>
+        <form action="#" method="get">
+            <input type="text" class="form-control" id="search" name="search" placeholder="Søg...">
+            <select id="raceFilter" name="race" class="form-select">
+                <option value="" selected>Vælg race</option>
+                <option th:each="race : ${races}" th:value="${race.id}" th:text="${race.name}"></option>
+            </select>
+            <div class="range-container">
+                <span class="range-label" id="ageLabel">Alder: 5</span>
+                <input type="range" class="form-range" id="age" name="age" min="0" max="15" value="5"
+                       oninput="document.getElementById('ageLabel').textContent = 'Alder: ' + this.value">
+            </div>
+            <button type="submit" class="btn btn-primary">Anvend filtre</button>
+        </form>
     </div>
 
 
