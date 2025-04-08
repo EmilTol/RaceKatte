@@ -155,23 +155,5 @@ public class CatRepository {
         return result == 1;
     }
 
-//    public List<Cat> findCatsByFilters(String search, Integer raceId, Integer ageMin, Integer ageMax) {
-//        // Bygger grund-sql i samme stil som findAllCatsAndUsers
-//        StringBuilder sql = new StringBuilder(
-//                "SELECT \n"
-//                        + "  c.id AS catId,\n"
-//                        + "  c.userId,\n"
-//                        + "  c.name AS catName,\n"
-//                        + "  c.age,\n"
-//                        + "  c.gender,\n"
-//                        + "  c.description,\n"
-//                        + "  c.img,\n"
-//                        + "  u.id AS userId,\n"
-//                        + "  u.email,\n"
-//                        + "  u.firstName,\n"
-//                        + "  u.lastName,\n"
-//        );
-//    }
-
 
 }
