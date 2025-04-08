@@ -3,6 +3,7 @@ package com.example.racekatte.presentation;
 import com.example.racekatte.application.CatService;
 import com.example.racekatte.application.UserService;
 import com.example.racekatte.entity.Cat;
+import com.example.racekatte.entity.Race;
 import com.example.racekatte.entity.User;
 import com.example.racekatte.application.LoginService;
 import jakarta.servlet.http.HttpSession;
@@ -68,12 +69,15 @@ public class LoginController {
     public String home(HttpSession session, Model model) {
         User user = (User) session.getAttribute("currentUser");
 
+
         if (user == null) {
             return "redirect:/login";
         }
         List<Cat> cats = catService.getAllCatsAndUsers();
+        List<Race> races = catService.getAllRaces();
         model.addAttribute("cats", cats);
         model.addAttribute("user", user);
+        model.addAttribute("races", races);
         return "home";
     }
 
