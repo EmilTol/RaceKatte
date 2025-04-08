@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Winky+Sans:wght@300;400;700&display=swap');
 
 * {
@@ -18,7 +17,6 @@ body {
     position: relative;
 }
 
-
 .sidebar {
     position: fixed;
     top: 0;
@@ -28,14 +26,12 @@ body {
     color: #2F3E34;
 }
 
-
 .sidebar h2 {
     text-transform: uppercase;
     text-align: center;
     margin-bottom: 30px;
     color: #2F3E34;
 }
-
 
 .left-sidebar {
     left: 0;
@@ -90,21 +86,22 @@ body {
     color: #2F3E34;
 }
 
-.range-container {
+.age-input-container {
     text-align: center;
     margin-bottom: 15px;
 }
 
-.range-label {
+.age-label {
     font-weight: bold;
     color: #2F3E34;
     margin-bottom: 5px;
     display: block;
 }
-.form-range {
+
+.age-input {
     width: 90%;
     margin: 0 auto;
-    accent-color: #F4CE72;
+    padding: 5px;
 }
 
 .main_content {
@@ -112,7 +109,6 @@ body {
     margin-right: 290px;
     padding: 20px;
 }
-
 
 .card {
     background: #FFFFFF;

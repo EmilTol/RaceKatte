@@ -47,22 +47,31 @@
     </div>
     <div class="sidebar right-sidebar">
         <h2>Filtre</h2>
-        <form action="#" method="get">
-            <input type="text" class="form-control" id="search" name="search" placeholder="Søg...">
+        <form action="/home" method="get">
+            <input type="text" class="form-control" id="search" name="search"
+                   th:value="${search}" placeholder="Søg...">
             <select id="raceFilter" name="race" class="form-select">
-                <option value="" selected>Vælg race</option>
-                <option th:each="race : ${races}" th:value="${race.id}" th:text="${race.name}"></option>
+                <option value="">Vælg race</option>
+                <option th:each="race : ${races}"
+                        th:value="${race.id}"
+                        th:text="${race.name}"
+                        th:selected="${selectedRace != null and selectedRace == race.id}">
+                </option>
             </select>
-            <div class="range-container">
-                <span class="range-label" id="ageLabel">Alder: 5</span>
-                <input type="range" class="form-range" id="age" name="age" min="0" max="15" value="5"
-                       oninput="document.getElementById('ageLabel').textContent = 'Alder: ' + this.value">
+            <div class="age-input-container">
+                <label for="ageMin" class="age-label">Min Alder:</label>
+                <input type="number" class="form-control age-input" id="ageMin" name="ageMin"
+                       min="0" max="15" th:value="${minAge ?: 0}" placeholder="0">
+            </div>
+            <div class="age-input-container">
+                <label for="ageMax" class="age-label">Max Alder:</label>
+                <input type="number" class="form-control age-input" id="ageMax" name="ageMax"
+                       min="0" max="20" th:value="${maxAge ?: 20}" placeholder="20">
             </div>
             <button type="submit" class="btn btn-primary">Anvend filtre</button>
         </form>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"
-></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

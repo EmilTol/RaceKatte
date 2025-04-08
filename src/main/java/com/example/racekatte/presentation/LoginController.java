@@ -64,22 +64,33 @@ public class LoginController {
             return "login";
         }
     }
+//    @RequestParam() String search, @RequestParam Integer race, @RequestParam Integer ageMin, @RequestParam Integer ageMax
+@GetMapping("/home")
+public String home(HttpSession session,
+                   @RequestParam(required = false) String search,
+                   @RequestParam(required = false) Integer race,
+                   @RequestParam(required = false, name = "ageMin") Integer minAge,
+                   @RequestParam(required = false, name = "ageMax") Integer maxAge,
+                   Model model) {
+    User user = (User) session.getAttribute("currentUser");
 
-    @GetMapping("/home")
-    public String home(HttpSession session, Model model) {
-        User user = (User) session.getAttribute("currentUser");
-
-
-        if (user == null) {
-            return "redirect:/login";
-        }
-        List<Cat> cats = catService.getAllCatsAndUsers();
-        List<Race> races = catService.getAllRaces();
-        model.addAttribute("cats", cats);
-        model.addAttribute("user", user);
-        model.addAttribute("races", races);
-        return "home";
+    if (user == null) {
+        return "redirect:/login";
     }
+
+    List<Cat> cats = catService.filteredCatsBySearch(search, race, minAge, maxAge);
+    List<Race> races = catService.getAllRaces();
+
+    model.addAttribute("cats", cats);
+    model.addAttribute("user", user);
+    model.addAttribute("races", races);
+    model.addAttribute("search", search);
+    model.addAttribute("selectedRace", race);
+    model.addAttribute("minAge", minAge);
+    model.addAttribute("maxAge", maxAge);
+
+    return "home";
+}
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
