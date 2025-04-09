@@ -55,4 +55,9 @@ public class CatService {
         }
         return filteredCats;
     }
+
+    public void deleteCat(int catId) {
+        catRepo.deleteCatById(catId);
+    }
+
 }

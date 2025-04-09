@@ -54,14 +54,14 @@ public class UserController {
         return "redirect:/login";
     }
 
-//    @PostMapping("/delete-cat")
-//    public String deleteCat(@RequestParam("catId") int catId, HttpSession session) {
-//        User currentUser = (User) session.getAttribute("currentUser");
-//        if (currentUser == null) {
-//            return "redirect:/login";
-//        }
-//
-//        catService.deleteCat(catId);
-//        return "redirect:/user";
-//    }
+    @PostMapping("/delete-cat")
+    public String deleteCat(@RequestParam("catId") int catId, HttpSession session) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "redirect:/login";
+        }
+
+        catService.deleteCat(catId);
+        return "redirect:/user";
+    }
 }

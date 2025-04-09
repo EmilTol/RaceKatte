@@ -156,4 +156,11 @@ public class CatRepository {
     }
 
 
+    public void deleteCatById(int id) {
+        String sql = "DELETE FROM Cat WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+
+    }
+
+
 }
