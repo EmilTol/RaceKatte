@@ -9,10 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -88,4 +85,72 @@ public class CatController {
         }
         return "redirect:/home";
     }
+    @GetMapping("catEdit/{id}")
+    public String showEditForm(@PathVariable("id") int catId, HttpSession session, Model model) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "redirect:/login";
+        }
+
+        // Brug eksisterende metode i service og filtrér selv
+        Cat cat = catService.findCatsByUserId(currentUser.getId())
+                .stream()
+                .filter(c -> c.getId() == catId)
+                .findFirst()
+                .orElse(null);
+
+        if (cat == null) {
+            return "redirect:/user";
+        }
+
+        List<Race> races = catService.getAllRaces();
+        model.addAttribute("cat", cat);
+        model.addAttribute("races", races);
+        return "catEdit";
+    }
+    @PostMapping("/cat/update")
+    public String updateCat(HttpSession session,
+                            @RequestParam("id") int id,
+                            @RequestParam("name") String name,
+                            @RequestParam("age") int age,
+                            @RequestParam("gender") String gender,
+                            @RequestParam("description") String description,
+                            @RequestParam("race") int raceId,
+                            @RequestParam("oldImg") String oldImg,
+                            @RequestParam("image") MultipartFile file) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "redirect:/login";
+        }
+
+        String finalImgName = oldImg; // Brug det gamle billede, hvis ikke der er et nyt billede
+
+        // Hvis der er uploadet et nyt billede, gem det
+        try {
+            if (!file.isEmpty()) {
+                String originalFilename = file.getOriginalFilename();
+                String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+                String uniqueFilename = UUID.randomUUID().toString() + extension;
+
+                String uploadDir = new File("src/main/resources/static/uploads").getAbsolutePath();
+                File destination = new File(uploadDir + "/" + uniqueFilename);
+                file.transferTo(destination);
+
+                finalImgName = uniqueFilename; // Erstat med det nye billede
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "redirect:/user"; // Fejl ved billedeupload
+        }
+
+        // Brug CatService til at opdatere katten
+        boolean updated = catService.updateCat(id, currentUser.getId(), name, age, gender, description, raceId, finalImgName);
+
+        if (updated) {
+            return "redirect:/user"; // Hvis opdatering lykkedes, omdiriger til brugerens side
+        } else {
+            return "redirect:/user"; // Hvis opdatering fejlede, omdiriger tilbage
+        }
+    }
 }
+

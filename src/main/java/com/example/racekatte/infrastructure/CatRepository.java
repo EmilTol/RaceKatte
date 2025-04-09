@@ -162,6 +162,24 @@ public class CatRepository {
         jdbcTemplate.update(sql, id);
 
     }
+    public boolean updateCat(Cat cat) {
+        String sql = """
+            UPDATE Cat
+            SET name = ?, age = ?, gender = ?, description = ?, img = ?, raceId = ?
+            WHERE id = ? AND userId = ?
+        """;
+        int result = jdbcTemplate.update(sql,
+                cat.getName(),
+                cat.getAge(),
+                cat.getGender(),
+                cat.getDescription(),
+                cat.getImg(),
+                cat.getRace() != null ? cat.getRace().getId() : null,
+                cat.getId(),
+                cat.getUserId()
+        );
+        return result == 1; // Hvis en række er opdateret, så returnér true
+    }
 
 
 }

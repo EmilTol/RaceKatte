@@ -2,11 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Opret Kat Indlæg</title>
+    <title>Rediger Kat Indlæg</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/css/forCats.css}">
 </head>
 <body>
+
 <div class="wrapper">
 
     <div class="sidebar left-sidebar">
@@ -52,42 +53,64 @@
         <div class="info">
             <div></div>
         </div>
-
 <div class="container mt-5">
-    <h1>Opret Kat Indlæg</h1>
-    <form th:action="@{/cat/upload}" method="post" enctype="multipart/form-data">
+    <h1>Rediger Kat Indlæg</h1>
+    <form th:action="@{/cat/update}" method="post" enctype="multipart/form-data">
+        <!-- Skjulte inputfelter -->
+        <input type="hidden" name="id" th:value="${cat.id}" />
+        <input type="hidden" name="oldImg" th:value="${cat.img}" />
+
+        <!-- Navn -->
         <div class="mb-3">
             <label for="name" class="form-label">Kattens Navn</label>
-            <input type="text" name="name" class="form-control" id="name" placeholder="Indtast kattens navn" required>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Indtast kattens navn" th:value="${cat.name}" required>
         </div>
+
+        <!-- Alder -->
         <div class="mb-3">
             <label for="age" class="form-label">Alder</label>
-            <input type="number" name="age" class="form-control" id="age" placeholder="Indtast kattens alder" required>
+            <input type="number" name="age" class="form-control" id="age" placeholder="Indtast kattens alder" th:value="${cat.age}" min="0" required>
         </div>
+
+        <!-- Køn -->
         <div class="mb-3">
             <label for="gender" class="form-label">Køn</label>
             <select name="gender" class="form-select" id="gender" required>
-                <option value="" disabled selected>Vælg køn</option>
-                <option th:each="g : ${genders}" th:value="${g}" th:text="${g}"></option>
+                <option value="Han" th:selected="${cat.gender == 'Han'}">Han</option>
+                <option value="Hun" th:selected="${cat.gender == 'Hun'}">Hun</option>
             </select>
         </div>
+
+        <!-- Race -->
         <div class="mb-3">
             <label for="race" class="form-label">Race</label>
             <select name="race" class="form-select" id="race" required>
-                <option value="0" selected>Vælg race</option>
-                <option th:each="race : ${races}" th:value="${race.id}" th:text="${race.name}"></option>
+                <option value="0" disabled selected>Vælg race</option>
+                <option th:each="race : ${races}" th:value="${race.id}" th:text="${race.name}" th:selected="${cat.race != null and cat.race.id == race.id}"></option>
             </select>
         </div>
+
+        <!-- Beskrivelse -->
         <div class="mb-3">
             <label for="description" class="form-label">Beskrivelse</label>
-            <textarea name="description" class="form-control" id="description" rows="3" placeholder="Beskriv katten"></textarea>
+            <textarea name="description" class="form-control" id="description" rows="3" placeholder="Beskriv katten" th:text="${cat.description}"></textarea>
         </div>
+
+        <!-- Billede -->
         <div class="mb-3">
             <label for="image" class="form-label">Billed-URL (filupload)</label>
-            <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+            <input type="file" class="form-control" id="image" name="image" accept="image/*">
         </div>
-        <button type="submit" class="btn btn-primary">Opret Indlæg</button>
+
+        <!-- Vis nuværende billede, hvis det findes -->
+        <div th:if="${cat.img}">
+            <p>Nuværende billede:</p>
+            <img th:src="@{'/uploads/' + ${cat.img}}" alt="Nuværende billede" width="200">
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Opdater Indlæg</button>
     </form>
+
     <div th:if="${error}" class="alert alert-danger mt-3" th:text="${error}"></div>
 </div>
     </div>

@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Winky+Sans:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
 
-* {
+{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -105,25 +105,11 @@ body {
 }
 
 .main_content {
-    margin-left: 340px;
-    margin-right: 390px;
+    margin-left: 240px;
+    margin-right: 290px;
     padding: 20px;
 }
 
-.card {
-    background: #FFFFFF;
-    margin-top: 20px;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-.card-img-top {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-.card-text {
-    color: #000000;
-}
 .list-group-item {
     border: none;
 }
@@ -141,7 +127,3 @@ body {
 .right-sidebar button.btn:hover {
     background-color: #D7F2E3;
 }
-
-/*.card-link {*/
-/*    color: #2F3E34;*/
-/*}*/

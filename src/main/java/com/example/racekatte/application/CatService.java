@@ -59,5 +59,23 @@ public class CatService {
     public void deleteCat(int catId) {
         catRepo.deleteCatById(catId);
     }
+    public boolean updateCat(int id, int userId, String name, int age, String gender, String description, int raceId, String img) {
+        Cat cat = new Cat();
+        cat.setId(id);
+        cat.setUserId(userId);
+        cat.setName(name);
+        cat.setAge(age);
+        cat.setGender(gender);
+        cat.setDescription(description);
+        cat.setImg(img);
+
+        if (raceId != 0) {
+            Race race = new Race();
+            race.setId(raceId);
+            cat.setRace(race);
+        }
+
+        return catRepo.updateCat(cat); // Bruger repositoryet til at opdatere katten i databasen
+    }
 
 }
