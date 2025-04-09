@@ -25,6 +25,8 @@ public class CatRepository {
             c.gender,
             c.description,
             c.img,
+            c.raceId,
+            c.userid,
 
             u.id AS userId,
             u.email,
@@ -38,8 +40,7 @@ public class CatRepository {
 
         FROM Cat c
         JOIN User u ON c.userId = u.id
-        LEFT JOIN CatRace cr ON c.id = cr.catId
-        LEFT JOIN Race r ON cr.raceId = r.id
+        LEFT JOIN Race r ON c.raceId = r.id
         WHERE c.userId = ?
         """;
 
