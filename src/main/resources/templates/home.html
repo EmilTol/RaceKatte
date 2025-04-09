@@ -14,9 +14,9 @@
         <ul>
             <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
             <li><a href="/user"><i class="fas fa-user"></i> Profil</a></li>
-            <li><a href="#"><i class="fas fa-profil"></i> NOGET</a></li>
+            <li><a href="/members"><i class="fas fa-users"></i> Medlemmer</a></li>
             <li><a href="/catpost"><i class="fas fa-plus"></i> Opret opslag</a></li>
-            <li><a href="/"><i class="fas fa-logout"></i> Log ud</a></li>
+            <li><a href="/logout"><i class="fas fa-logout"></i> Log ud</a></li>
         </ul>
     </div>
     <div class="main_content">
@@ -34,12 +34,15 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" th:text="'Race: ' + (${cat.race.name} ?: 'Ikke angivet')"></li>
-                        <li class="list-group-item" th:text="'Alder: ' + ${cat.age}"></li>
+                        <li class="list-group-item" th:text="'Alder: ' + ${cat.age} + ' år'"></li>
                         <li class="list-group-item" th:text="'Køn: ' + ${cat.gender}"></li>
                     </ul>
                     <div class="card-body">
                         <a href="#" class="card-link" th:text="${cat.user.firstName ?: 'Ikke angivet'}"></a>
                         <p th:text="'Mobil: ' + (${cat.user.phoneNumber} ?: 'Ikke angivet') + '   Postnummer: ' + (${cat.user.postalCode} ?: 'Ikke angivet')"></p>
+                        <p class="card-text">
+                            <small class="text-body-secondary" th:text="'Posted ' + ${cat.postedDate}"></small>
+                        </p>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 package com.example.racekatte.entity;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class Cat {
@@ -12,6 +13,8 @@ public class Cat {
     private String img;
     private User user;
     private Race race;
+    private Timestamp createdAt;
+    private String postedDate;
 
     public Cat() {
     }
@@ -24,6 +27,7 @@ public class Cat {
         this.gender = gender;
         this.description = description;
         this.img = img;
+        this.createdAt = createdAt;
 
     }
     public int getId() {
@@ -82,5 +86,18 @@ public class Cat {
 
     public void setRace(Race race) {
         this.race = race;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+    public String getPostedDate() {
+        return postedDate;
+    }
+    public void setPostedDate(String postedDate) {
+        this.postedDate = postedDate;
     }
 }

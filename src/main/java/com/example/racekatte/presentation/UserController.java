@@ -2,13 +2,19 @@ package com.example.racekatte.presentation;
 
 import com.example.racekatte.application.CatService;
 import com.example.racekatte.application.UserService;
+import com.example.racekatte.entity.Cat;
 import com.example.racekatte.entity.User;
 import com.example.racekatte.infrastructure.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -63,5 +69,22 @@ public class UserController {
 
         catService.deleteCat(catId);
         return "redirect:/user";
+    }
+
+    @GetMapping("/members")
+    public String showMembers(HttpSession session, Model model) {
+        User currentUser = (User) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "redirect:/login";
+        }
+
+        List<User> users = userService.getAllUsers();
+        for (User user : users) {
+            List<Cat> cats = catService.findCatsByUserId(user.getId());
+            user.setCats(cats);
+        }
+
+        model.addAttribute("users", users);
+        return "members";
     }
 }

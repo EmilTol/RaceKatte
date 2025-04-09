@@ -6,6 +6,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class UserRepository {
 
@@ -80,6 +82,20 @@ public class UserRepository {
     public void deleteById(int id) {
         String sql = "DELETE FROM User WHERE id = ?";
         jdbcTemplate.update(sql, id);
+    }
+
+    public List<User> findAllUsers() {
+        String sql = "SELECT id, email, firstName, lastName, postalCode, phoneNumber FROM User";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setEmail(rs.getString("email"));
+            user.setFirstName(rs.getString("firstName"));
+            user.setLastName(rs.getString("lastName"));
+            user.setPostalCode(rs.getString("postalCode"));
+            user.setPhoneNumber(rs.getString("phoneNumber"));
+            return user;
+        });
     }
 
 

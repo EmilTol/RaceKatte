@@ -78,14 +78,15 @@ public class CatRepository {
 
     public List<Cat> findAllCatsAndUsers() {
         String sql = "SELECT \n" +
-                "  c.id AS catId,\n" +
-                "  c.userId,\n" +
-                "  c.name AS catName,\n" +
-                "  c.age,\n" +
-                "  c.gender,\n" +
-                "  c.description,\n" +
-                "  c.img,\n" +
-                "  c.raceId,\n" +
+                "c.id AS catId,\n" +
+                "c.userId,\n" +
+                "c.name AS catName,\n" +
+                "c.age,\n" +
+                "c.gender,\n" +
+                "c.description,\n" +
+                "c.img,\n" +
+                "c.raceId,\n" +
+                "c.createdAt,\n" +
 
                 "  u.id AS userId,\n" +
                 "  u.email,\n" +
@@ -110,6 +111,7 @@ public class CatRepository {
                 cat.setGender(rs.getString("gender"));
                 cat.setDescription(rs.getString("description"));
                 cat.setImg(rs.getString("img"));
+                cat.setCreatedAt(rs.getTimestamp("createdAt"));
 
                 User user = new User();
                 user.setId(rs.getInt("userId"));

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Medlemsliste</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+<div class="wrapper">
+    <div class="sidebar left-sidebar">
+        <h2>SideBar</h2>
+        <ul>
+            <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/user"><i class="fas fa-user"></i> Profil</a></li>
+            <li><a href="/members"><i class="fas fa-users"></i> Medlemmer</a></li>
+            <li><a href="/catpost"><i class="fas fa-plus"></i> Opret opslag</a></li>
+            <li><a href="/logout"><i class="fas fa-logout"></i> Log ud</a></li>
+        </ul>
+    </div>
+    <div class="main_content">
+        <div class="header">
+            <h1>Medlemsliste</h1>
+        </div>
+        <div class="info">
+            <div th:each="user : ${users}" class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${user.firstName + ' ' + user.lastName ?: 'Uden navn'}"></h5>
+                    <p class="card-text">
+                        Email: <span th:text="${user.email}"></span><br>
+                        Telefon: <span th:text="${user.phoneNumber ?: 'Ikke angivet'}"></span><br>
+                        Postnummer: <span th:text="${user.postalCode ?: 'Ikke angivet'}"></span>
+                    </p>
+                    <h6>Katte:</h6>
+                    <ul th:if="${user.cats != null and not #lists.isEmpty(user.cats)}" class="list-group">
+                        <li th:each="cat : ${user.cats}" class="list-group-item">
+                            <strong th:text="${cat.name}"></strong> -
+                            Race: <span th:text="${cat.race?.name ?: 'Ikke angivet'}"></span>,
+                            Alder: <span th:text="${cat.age}"></span>,
+                            Køn: <span th:text="${cat.gender}"></span>
+                        </li>
+                    </ul>
+                    <p th:if="${user.cats == null or #lists.isEmpty(user.cats)}">Ingen katte registreret.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar right-sidebar">
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

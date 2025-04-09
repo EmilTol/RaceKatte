@@ -1,5 +1,7 @@
 package com.example.racekatte.entity;
 
+import java.util.List;
+
 public class User {
     private int id;
     private String email;
@@ -8,6 +10,8 @@ public class User {
     private String lastName;
     private String postalCode;
     private String phoneNumber;
+
+    private List<Cat> cats;
 
     public User() {
     }
@@ -62,6 +66,13 @@ public class User {
     }
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<Cat> getCats() {
+        return cats;
+    }
+    public void setCats(List<Cat> cats) {
+        this.cats = cats;
     }
 
 }

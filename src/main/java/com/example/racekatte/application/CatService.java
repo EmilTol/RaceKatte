@@ -6,6 +6,7 @@ import com.example.racekatte.infrastructure.CatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class CatService {
     }
 
     public List<Cat> filteredCatsBySearch(String search, Integer raceId, Integer minAge, Integer maxAge) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         List<Cat> allCats = catRepo.findAllCatsAndUsers();
         List<Cat> filteredCats = new ArrayList<>();
 
@@ -50,9 +52,11 @@ public class CatService {
                     (maxAge == null || cat.getAge() <= maxAge);
 
             if (matchesSearch && matchesRace && matchesAge) {
+                cat.setPostedDate(sdf.format(cat.getCreatedAt()));
                 filteredCats.add(cat);
             }
         }
+        filteredCats.sort((c1, c2) -> c2.getCreatedAt().compareTo(c1.getCreatedAt()));
         return filteredCats;
     }
 
