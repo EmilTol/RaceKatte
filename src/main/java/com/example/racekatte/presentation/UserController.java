@@ -72,19 +72,20 @@ public class UserController {
     }
 
     @GetMapping("/members")
-    public String showMembers(HttpSession session, Model model) {
+    public String showMembers(HttpSession session, Model model, @RequestParam(required = false) String search) {
         User currentUser = (User) session.getAttribute("currentUser");
         if (currentUser == null) {
             return "redirect:/login";
         }
 
-        List<User> users = userService.getAllUsers();
+        List<User> users = userService.getAllUsers(search);
         for (User user : users) {
             List<Cat> cats = catService.findCatsByUserId(user.getId());
             user.setCats(cats);
         }
 
         model.addAttribute("users", users);
+        model.addAttribute("search", search);
         return "members";
     }
 }
