@@ -11,9 +11,9 @@
 <div class="wrapper">
 
     <div class="sidebar left-sidebar">
-        <h2>SideBar</h2>
+        <h2>MewSpace</h2>
         <ul>
-            <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/home"><i class="fas fa-home"></i> Forside</a></li>
             <li><a href="/user"><i class="fas fa-user"></i> Profil</a></li>
             <li><a href="/members"><i class="fas fa-users"></i> Medlemmer</a></li>
             <li><a href="/catpost"><i class="fas fa-plus"></i> Opret opslag</a></li>
@@ -54,7 +54,7 @@
             <div></div>
         </div>
 <div class="container mt-5">
-    <h1>Rediger Kat Indlæg</h1>
+    <h1>Rediger Kat Opslag</h1>
     <form th:action="@{/cat/update}" method="post" enctype="multipart/form-data">
         <!-- Skjulte inputfelter -->
         <input type="hidden" name="id" th:value="${cat.id}" />
@@ -108,7 +108,7 @@
             <img th:src="@{'/uploads/' + ${cat.img}}" alt="Nuværende billede" width="200">
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3">Opdater Indlæg</button>
+        <button type="submit" class="btn btn-primary mt-3">Opdater Opslag</button>
     </form>
 
     <div th:if="${error}" class="alert alert-danger mt-3" th:text="${error}"></div>

@@ -10,9 +10,9 @@
 <body>
 <div class="wrapper">
     <div class="sidebar left-sidebar">
-        <h2>SideBar</h2>
+        <h2>MewSpace</h2>
         <ul>
-            <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/home"><i class="fas fa-home"></i> Forside</a></li>
             <li><a href="/user"><i class="fas fa-user"></i> Profil</a></li>
             <li><a href="/members"><i class="fas fa-users"></i> Medlemmer</a></li>
             <li><a href="/catpost"><i class="fas fa-plus"></i> Opret opslag</a></li>
@@ -41,7 +41,7 @@
                         <a href="#" class="card-link" th:text="${cat.user.firstName ?: 'Ikke angivet'}"></a>
                         <p th:text="'Mobil: ' + (${cat.user.phoneNumber} ?: 'Ikke angivet') + '   Postnummer: ' + (${cat.user.postalCode} ?: 'Ikke angivet')"></p>
                         <p class="card-text">
-                            <small class="text-body-secondary" th:text="'Posted ' + ${cat.postedDate}"></small>
+                            <small class="text-body-secondary" th:text="'Oprettet ' + ${cat.postedDate}"></small>
                         </p>
                     </div>
                 </div>
