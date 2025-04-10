@@ -34,27 +34,27 @@ public class LoginController {
 
     @GetMapping("/login")
     public String showLoginForm(Model model) {
-        if (!model.containsAttribute("user")) {
-            model.addAttribute("user", new User());
+        if (!model.containsAttribute("user")) { // Tjekker om der allerede er et user objekt i modellen
+            model.addAttribute("user", new User()); // Tilføjer et nyt tomt user objekt
         }
         return "login";
     }
 
     @PostMapping("/login")
     public String login(@ModelAttribute User user, HttpSession session, Model model) {
-        User loggedIn = loginService.login(user.getEmail(), user.getPassword());
-        if (loggedIn != null) {
-            session.setAttribute("currentUser", loggedIn);
-            return "redirect:/home";
-        } else {
-            model.addAttribute("error", "Forket kode eller email");
-            return "login";
+        User loggedIn = loginService.login(user.getEmail(), user.getPassword()); // Kalder login metoden med email og adgangskode
+        if (loggedIn != null) { // Hvis logik godkendes
+            session.setAttribute("currentUser", loggedIn); // Gemmer den loggede ind bruger i session
+            return "redirect:/home"; // Omdirigere til home
+        } else { // Hvis login fejler
+            model.addAttribute("error", "Forket kode eller email"); // Tilføjer en fejlbesked
+            return "login"; // Bliver på login side
         }
     }
 
     @PostMapping("/register")
     public String register(@ModelAttribute User user, @RequestParam("confirmPassword") String confirmPassword, Model model) { // Håndtere registering af ny profil, binder data til vores user og genter confirm parameter
-        boolean success = loginService.register(user, confirmPassword); // Kalder vores login for at reg bruger
+        boolean success = loginService.register(user, confirmPassword); // Kalder registreringsmetoden med brugerdata og bekræftelseskdoe fra formularen
         if (success) { // Hvis success går vi til login side
             return "redirect:/login";
         } else { // Hvis ikke
@@ -72,14 +72,14 @@ public String home(HttpSession session,
                    @RequestParam(required = false, name = "ageMin") Integer minAge,
                    @RequestParam(required = false, name = "ageMax") Integer maxAge,
                    Model model) {
-    User user = (User) session.getAttribute("currentUser");
+    User user = (User) session.getAttribute("currentUser"); // Henter den aktuelle bruger fra session
 
-    if (user == null) {
+    if (user == null) { // Hvis ingen bruger er logget ind bliver vi smidt tilbage til login
         return "redirect:/login";
     }
 
-    List<Cat> cats = catService.filteredCatsBySearch(search, race, minAge, maxAge);
-    List<Race> races = catService.getAllRaces();
+    List<Cat> cats = catService.filteredCatsBySearch(search, race, minAge, maxAge); // Henter filter liste baseret på søgning
+    List<Race> races = catService.getAllRaces(); // Henter liste medw alle racer fra db
 
     model.addAttribute("cats", cats);
     model.addAttribute("user", user);
@@ -94,18 +94,18 @@ public String home(HttpSession session,
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate();
+        session.invalidate(); // invalidater nuværende session og fjerner data
         return "redirect:/login";
     }
 
     @GetMapping("/user")
     public String user(HttpSession session, Model model) {
-        User user = (User) session.getAttribute("currentUser");
+        User user = (User) session.getAttribute("currentUser"); // Henter den aktuelle user fra session
 
         if (user == null) {
             return "redirect:/login";
         }
-        List<Cat> cats = catService.findCatsByUserId(user.getId());
+        List<Cat> cats = catService.findCatsByUserId(user.getId()); // Henter alle katte tilknyttet userid
         model.addAttribute("cats", cats);
         model.addAttribute("user", user);
         return "user";

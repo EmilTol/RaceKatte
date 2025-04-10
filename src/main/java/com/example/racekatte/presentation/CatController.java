@@ -29,16 +29,16 @@ public class CatController {
 
     @GetMapping("/catpost")
     public String showCatPostForm(Model model, HttpSession session) {
-        User currentUser = (User) session.getAttribute("currentUser");
+        User currentUser = (User) session.getAttribute("currentUser"); // Henter aktive user fra session
         if (currentUser == null) {
             return "redirect:/login";
         }
-        Cat cat = new Cat();
-        cat.setRace(new Race()); // Sikre den ikke er null, blev ved med at give fejl, det her ser ud til at have løst det :)
-        model.addAttribute("cat", cat); // Tilføjer vores kat til model objektet
-        List<Race> races = catService.getAllRaces();
-        model.addAttribute("races", races); // Tilføjer vores racer til model objektet
-        model.addAttribute("genders", Gender.values());
+        Cat cat = new Cat(); // Opretter tomt katte opbjekt
+        cat.setRace(new Race()); // initialisere raceobjekt - fiksede vores null problem
+        model.addAttribute("cat", cat); // Tilføjer vores kat til model
+        List<Race> races = catService.getAllRaces(); // Henter alle racer fra db
+        model.addAttribute("races", races); // Tilføjer vores racer til model
+        model.addAttribute("genders", Gender.values()); // Tilføjer mulige køn
         return "catpost";
     }
 
@@ -50,7 +50,7 @@ public class CatController {
                             @RequestParam("race") int raceId,
                             @RequestParam("image") MultipartFile file,
                             HttpSession session, Model model) {
-        User currentUser = (User) session.getAttribute("currentUser");
+        User currentUser = (User) session.getAttribute("currentUser"); // Henter user session igen igen
         if (currentUser == null) {
             return "redirect:/login";
         }
@@ -63,21 +63,21 @@ public class CatController {
             File destination = new File(uploadDir + "/" + uniqueFilename); //Opretter et objekt med stien
             file.transferTo(destination); //gemmer filen i destination?
 
-            Cat newCat = new Cat(); // Opretter vores katte objekt
-            newCat.setName(name);
+            Cat newCat = new Cat(); // Opretter et nyt katte objekt til oprettelse
+            newCat.setName(name); // Sætter navn
             newCat.setAge(age);
             newCat.setGender(gender);
             newCat.setDescription(description);
             newCat.setUserId(currentUser.getId());
 
             if (raceId != 0) { // Hvis race bliver valgt eller ignorer
-                Race race = new Race();
-                race.setId(raceId);
-                newCat.setRace(race);
+                Race race = new Race(); // Opretter et nyt raceobjekt
+                race.setId(raceId); // Sætter raceid fra input
+                newCat.setRace(race); // tilknutter racen til katten
             }
             newCat.setImg(uniqueFilename); // Sætter billedet med det unikke navn
 
-            catService.createCat(newCat); // Opretter katten
+            catService.createCat(newCat); // Gemmer den nye kat i db gennem catservice
         } catch (IOException e) {
             e.printStackTrace();
             model.addAttribute("error", "Der opstod en fejl under upload af billedet.");
@@ -93,19 +93,19 @@ public class CatController {
         }
 
         // Brug eksisterende metode i service og filtrér selv
-        Cat cat = catService.findCatsByUserId(currentUser.getId())
+        Cat cat = catService.findCatsByUserId(currentUser.getId()) // Henter alle katte for den akutelle bruger
                 .stream()
-                .filter(c -> c.getId() == catId)
+                .filter(c -> c.getId() == catId) // Starter en stream ^ for a filtrere listen, Filtrere kun katten med det angivet id fra kald, finder den første med id.
                 .findFirst()
-                .orElse(null);
+                .orElse(null); // returnere null hvis der ikke findes en kat med det id
 
         if (cat == null) {
-            return "redirect:/user";
+            return "redirect:/user"; // redirect til user hvis katten ikke findes
         }
 
-        List<Race> races = catService.getAllRaces();
-        model.addAttribute("cat", cat);
-        model.addAttribute("races", races);
+        List<Race> races = catService.getAllRaces(); //Henter alle racer fra db til vores drop down
+        model.addAttribute("cat", cat); // Tilføjer vores katte objekt til modellen for af have formularen udfyldt med nuværende data
+        model.addAttribute("races", races); // Tilføjer racer til modellen så de kan bruges i dropdown
         return "catEdit";
     }
     @PostMapping("/cat/update")

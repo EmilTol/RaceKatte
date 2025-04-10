@@ -15,9 +15,9 @@ public class LoginService {
     }
 
     public User login(String email, String password) { // Vores login metode som tager email og password som parameter
-        User user = userRepository.findByEmail(email); // Henter user info ved at søge på email i repo
-        if (user != null && BCrypt.checkpw(password, user.getPassword())) { // Tjekker om bruger findes og om kodet matcher det den hashed værdi i db, forstår jeg stadig ikke helt
-            return user; //
+        User user = userRepository.findByEmail(email); // Henter vores user objekt fra db ved at søge på den indtastet email
+        if (user != null && BCrypt.checkpw(password, user.getPassword())) { // Tjekker om bruger findes og om kodet matcher det den hashed værdi i db
+            return user; // Returnere vores user objekt hvis korrekt
         }
         return null; // Returnere null hvis der er sket en fejl, altså enten forkert email eller kode
     }
@@ -30,7 +30,7 @@ public class LoginService {
             return false; // flase hvis den findes
         }
         String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()); // Hasher kodeord med bcrypt. + salt hvilket sikre at den samme hashed værdi ikke findes 2 gange tror je
-        user.setPassword(hashedPassword); // Sætter brugerens kode til den hashed værdi
+        user.setPassword(hashedPassword); // Sætter brugerens kode til den hashed værdi, opdatere user objektet
         return userRepository.registerUser(user); //Kalder repo og gemmer i repo
     }
 }
