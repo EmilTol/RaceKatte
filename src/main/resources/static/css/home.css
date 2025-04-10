@@ -15,6 +15,24 @@ body {
 
 .wrapper {
     position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/img/prints.png');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    background-position: top left;
+    opacity: 0.1;
+    z-index: -1;
 }
 
 .sidebar {
@@ -108,6 +126,10 @@ body {
     margin-left: 340px;
     margin-right: 390px;
     padding: 20px;
+    /*background-image: url("/img/catPrints.png"); !* Add paw print background *!*/
+    /*background-size: auto; !* Keep paw prints at original size *!*/
+    /*background-repeat: repeat; !* Repeat the pattern *!*/
+    /*background-position: center; !* Center the background *!*/
 }
 
 .card {
