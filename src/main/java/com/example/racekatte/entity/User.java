@@ -10,7 +10,6 @@ public class User {
     private String lastName;
     private String postalCode;
     private String phoneNumber;
-
     private List<Cat> cats;
 
     public User() {
@@ -74,5 +73,4 @@ public class User {
     public void setCats(List<Cat> cats) {
         this.cats = cats;
     }
-
 }
