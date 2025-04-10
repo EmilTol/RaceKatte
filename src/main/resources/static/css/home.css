@@ -126,10 +126,7 @@ body {
     margin-left: 340px;
     margin-right: 390px;
     padding: 20px;
-    /*background-image: url("/img/catPrints.png"); !* Add paw print background *!*/
-    /*background-size: auto; !* Keep paw prints at original size *!*/
-    /*background-repeat: repeat; !* Repeat the pattern *!*/
-    /*background-position: center; !* Center the background *!*/
+
 }
 
 .card {
