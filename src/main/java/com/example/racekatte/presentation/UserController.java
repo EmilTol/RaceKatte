@@ -32,6 +32,20 @@ public class UserController {
         ;
     }
 
+    @GetMapping("/user")
+    public String user(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("currentUser"); // Henter den aktuelle user fra session
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+        List<Cat> cats = catService.findCatsByUserId(user.getId()); // Henter alle katte tilknyttet userid
+        model.addAttribute("cats", cats);
+        model.addAttribute("user", user);
+        return "user";
+    }
+
+
 
     @PostMapping("/user")
     public String updateUser(HttpSession session, @RequestParam String email, @RequestParam String password,
