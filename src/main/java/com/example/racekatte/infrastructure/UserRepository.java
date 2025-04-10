@@ -14,7 +14,7 @@ public class UserRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public User findByEmail(String email) {
+    public User findByEmail(String email) { // Henter en bruger fra db baseret på email
         try {
             String sql = "SELECT id, email, password, firstName, lastName, postalCode, phoneNumber FROM User WHERE email = ?";
             return jdbcTemplate.queryForObject(sql, new Object[]{email}, (rs, rowNum) -> {
@@ -33,7 +33,7 @@ public class UserRepository {
         }
     }
 
-    public boolean registerUser(User user) {
+    public boolean registerUser(User user) { // Opretter en ny bruger i db med data fra user objektet
         String sql = "INSERT INTO User (email, password, firstName, lastName, postalCode, phoneNumber) VALUES (?, ?, ?, ?, ?, ?)";
         int result = jdbcTemplate.update(sql,
                 user.getEmail(),
@@ -42,9 +42,9 @@ public class UserRepository {
                 user.getLastName(),
                 user.getPostalCode(),
                 user.getPhoneNumber());
-        return result == 1;
+        return result == 1; // returnere true hvis en række er blevet indsat.
     }
-    public void updateUser(User user) {
+    public void updateUser(User user) { // Opdatere bruger med user objektet
         String sql = "UPDATE User SET email = ?,password = ?,firstName = ?,lastName = ?,postalCode = ?,phoneNumber = ? " +
                 "WHERE id = ?";
         int updatedRows = jdbcTemplate.update(sql,

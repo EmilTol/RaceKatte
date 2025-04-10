@@ -42,7 +42,7 @@ public class UserController {
             return "redirect:/login";
         }
 
-        userService.updateUser(currentUser.getId(), email, password, firstName, lastName, postalCode, phoneNumber);
+        userService.updateUser(currentUser.getId(), email, password, firstName, lastName, postalCode, phoneNumber); // Opdatere bruger data gennem userService
 
         session.setAttribute("currentUser", userRepository.findById(currentUser.getId()));
 
@@ -54,8 +54,8 @@ public class UserController {
         User currentUser = (User) session.getAttribute("currentUser");
 
         if (currentUser != null) {
-            userService.deleteUser(currentUser.getId());
-            session.invalidate();
+            userService.deleteUser(currentUser.getId()); // Sletter brugeren fra DB, gå igennem userService
+            session.invalidate(); // invalidater sessionen og logger dem ud.
         }
         return "redirect:/login";
     }
@@ -67,7 +67,7 @@ public class UserController {
             return "redirect:/login";
         }
 
-        catService.deleteCat(catId);
+        catService.deleteCat(catId); // Sletter kat fra db igennem catService
         return "redirect:/user";
     }
 
@@ -78,14 +78,14 @@ public class UserController {
             return "redirect:/login";
         }
 
-        List<User> users = userService.getAllUsers(search);
-        for (User user : users) {
-            List<Cat> cats = catService.findCatsByUserId(user.getId());
-            user.setCats(cats);
+        List<User> users = userService.getAllUsers(search); // Henter en filteret liste af brugere baseret på søgening
+        for (User user : users) { // Går igennem alle brugere i listen
+            List<Cat> cats = catService.findCatsByUserId(user.getId()); // Henter katte for alle brugere i db
+            user.setCats(cats); // Tilknytter katten vores user objekt
         }
 
-        model.addAttribute("users", users);
-        model.addAttribute("search", search);
+        model.addAttribute("users", users); // Tilføjer users til modellen
+        model.addAttribute("search", search); // Tilf'ker søgning til modellen
         return "members";
     }
 }
